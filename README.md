@@ -1,11 +1,11 @@
 # scheduLIT
-## A collaborative trip planning web application designed and built by CodersWhoParty.
+### A collaborative trip planning web application designed and built by CodersWhoParty.
 
 ## Group members:
-### Dominique Gordon, dlg2156
-### Matias Lirman, ml37007
-### Julian Silerio, jjs2245
-### Andres Aguayo, aa3642
+#### Dominique Gordon, dlg2156
+#### Matias Lirman, ml37007
+#### Julian Silerio, jjs2245
+#### Andres Aguayo, aa3642
 
 # Flask Skeleton
 
