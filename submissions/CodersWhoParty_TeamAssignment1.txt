@@ -1,0 +1,30 @@
+Team Assignment 1: Requirements and Wireframes
+CodersWhoParty
+
+User Stories:
+
+-- Login/sign up pages and functionalities.
+    -- Includes working persistent database schema.
+    -- Username and passwords.
+    -- Users have list of trips they are a part of.
+    -- Each trip object contains itinerary information.
+
+-- Create a trip functionality.
+    -- Trips are saved in the database as objects.
+    -- Trip variables include date, location, and trip owner.
+    -- Each trips holds a group of usernames associated with the trip.
+
+-- Open a trip functionality.
+    -- Pulls trip information from database.
+    -- Displays each associated user with option to view itinerary.
+    -- For trip owner, option to add user.
+
+-- Calendar itinerary viewing.
+    -- Pulls itinerary from users data.
+    -- Edit functionalities to add events to itinerary.
+    -- Data must be updated in user objects.
+
+
+Use Cases:
+
+
