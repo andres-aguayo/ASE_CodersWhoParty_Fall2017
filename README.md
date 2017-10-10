@@ -1,6 +1,8 @@
 # scheduLIT
 ### A collaborative trip planning web application designed and built by CodersWhoParty.
 
+This repository contains all assignments, submissions, and code related to our semester project for Advanced Software Engineering (COMSW4156) taught by Gail Kaiser in the Fall of 2017 at Columbia University. TA mentor is Tuhin Chakrabarty.
+
 ## Group members:
 #### Dominique Gordon, dlg2156
 #### Matias Lirman, ml37007
