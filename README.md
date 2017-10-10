@@ -9,6 +9,21 @@ This repository contains all assignments, submissions, and code related to our s
 #### Julian Silerio, jjs2245
 #### Andres Aguayo, aa3642
 
+## Overview:
+
+From experience, planning a trip with multiple people becomes a burden very quickly as
+differences in flights, hotels, schedules, and interests causes different itineraries and a
+nightmare in planning and scheduling. We are proposing a way to consolidate all this
+information into an easy to use, simple, and efficient calendar app. Our application will allow
+users to add information about their specific trip, including events, hotel and flight information,
+scheduled events, and tentative activities. This user specific itinerary can then be shared with
+and easily viewed by other members of the trip. This would make planning a trip with multiple
+users very manageable and allow for easy access to everyone's tentative schedule.
+
+Whether it is an extende family reunion, a jam-packed business trip, or even a fraternity
+spring break to a beach, scheduLIT makes group planning and coordination a breeze.
+
+
 # Flask Skeleton
 
 ### PULLED FROM [flask-skeleton](https://github.com/realpython/flask-skeleton/)
