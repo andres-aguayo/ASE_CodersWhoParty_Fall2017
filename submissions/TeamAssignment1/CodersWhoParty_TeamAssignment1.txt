@@ -1,0 +1,59 @@
+Team Assignment 1: Requirements and Wireframes
+CodersWhoParty
+
+
+Github repository can be accessed by using "git clone https://github.com/andres-aguayo/ASE_CodersWhoParty_Fall2017.git" to get repository locally. All relevant assignment files can be found under the directory "submissions" where this assignment's files are found under "TeamAssignment1".
+
+
+User Stories:
+
+-- Login/sign up pages and functionalities.
+    -- Includes working persistent database schema.
+    -- Username and passwords.
+    -- Users have list of trips they are a part of.
+    -- Each trip object contains itinerary information.
+
+-- Create a trip functionality.
+    -- Trips are saved in the database as objects.
+    -- Trip variables include date, location, and trip owner.
+    -- Each trips holds a group of usernames associated with the trip.
+
+-- Open a trip functionality.
+    -- Pulls trip information from database.
+    -- Displays each associated user with option to view itinerary.
+    -- For trip owner, option to add user.
+
+-- Calendar itinerary viewing.
+    -- Pulls itinerary from users data.
+    -- Edit functionalities to add events to itinerary.
+    -- Data must be updated in user objects.
+
+
+Use Cases:
+
+New User
+
+ -- Starts at login page.
+ -- Clicks the "Sign up as new user" link.
+ -- Enters information and clicks "Sign Up"
+       -- Information is collected into database
+ -- In empty "My Trips" page, click "New Trip"
+ -- Enter information and invite other users, click "Create Trip"
+       -- Other users receive notification and accept invite
+ -- In trip page, view all associated users and click "My Itinerary"
+ -- Add events and save to calendar view
+       -- Events are recorded in database
+
+Existing User
+
+ -- Enter username/password and click "Login"
+ -- View all existing trips on "My Trips" page
+       -- These trips are pulled from database
+ -- Click existing trip and view all users on trip page
+       -- These users are attached to trip object in database
+ -- Click on other user's itinerary to view their calendar
+ -- Go back to trip page and click on "My Itinerary"
+ -- Add identical events from other user's calendar to own calendar
+       -- events are recorded in database
+
+
