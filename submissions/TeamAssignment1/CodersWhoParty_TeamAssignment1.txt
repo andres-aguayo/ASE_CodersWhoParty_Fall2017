@@ -2,7 +2,11 @@ Team Assignment 1: Requirements and Wireframes
 CodersWhoParty
 
 
-Github repository can be accessed by using "git clone https://github.com/andres-aguayo/ASE_CodersWhoParty_Fall2017.git" to get repository locally. All relevant assignment files can be found under the directory "submissions" where this assignment's files are found under "TeamAssignment1".
+Github repository can be accessed by using "git clone 
+https://github.com/andres-aguayo/ASE_CodersWhoParty_Fall2017.git" 
+to get repository locally. All relevant assignment files can 
+be found under the directory "submissions" where this assignment's 
+files are found under "TeamAssignment1".
 
 
 User Stories:
