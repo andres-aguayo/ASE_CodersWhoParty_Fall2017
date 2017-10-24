@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+  <header class= "content-header">
+    <h1>Enter the information for your new trip</h1>
+  </header>
+
+  <br>
+
+
+
+  <form class="form" role="form" method="post" action="">
+
+    <!-- Three lines that I don't understand from register.html go here -->
+
+    <div class="col-lg-4 col-sm-r">
+
+      {{ wtf.form_field(form.name) }}
+      {{ wtf.form_field(form.location) }}
+      {{ wtf.form_field(form.start_date) }}
+      {{ wtf.form_field(form.end_date) }}
+
+      <button class="btn btn-success" type="submit">Create Trip!</button>
+
+    </div>
+
+  </form>
+
+{% endblock content %}
