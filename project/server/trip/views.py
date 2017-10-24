@@ -41,6 +41,6 @@ def new_trip():
         flash('New trip {} created.'.format(form.name.data), 'success')
         return redirect(url_for("main.home"))
 
-    return render_template('trip/new_trip.html', form=form)
+    return render_template('user/new_trip.html', form=form)
 
 
