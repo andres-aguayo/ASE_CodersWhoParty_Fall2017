@@ -11,7 +11,8 @@ from flask_login import login_user, logout_user, login_required
 
 from project.server import bcrypt, db
 from project.server.models import User
-from project.server.user.forms import LoginForm, RegisterForm
+from project.server.user.forms import LoginForm, RegisterForm, TripForm
+
 
 ################
 #### config ####
@@ -42,6 +43,11 @@ def register():
 
     return render_template('user/register.html', form=form)
 
+@user_blueprint.route('/newtrip', methods = ['GET','POST'])
+@login_required
+def newtrip():
+    form= TripForm(request.form)
+    return render_template('user/newtrip.html', form=form)
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def login():

@@ -31,3 +31,9 @@ class RegisterForm(FlaskForm):
             EqualTo('password', message='Passwords must match.')
         ]
     )
+
+class TripForm(FlaskForm):
+    name = StringField('Name', [DataRequired()])
+    location = StringField('Location', [DataRequired()])
+    start_date = StringField('Start Date', [DataRequired()])
+    end_date = StringField('End Date', [DataRequired()])
