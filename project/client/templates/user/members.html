@@ -1,5 +1,10 @@
 {% extends "_base.html" %}
 {% block content %}
   <h1>Welcome, <em>{{ current_user.email }}</em>!</h1>
-  <h3>This is the members-only page.</h3>
+  <h3>These are your current trips.</h3>
+
+  <form action="#">
+    <input type="submit" value="Create New Trip" />
+  </form>
+
 {% endblock %}
