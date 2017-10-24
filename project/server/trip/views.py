@@ -25,6 +25,7 @@ trip_blueprint = Blueprint('trip', __name__,)
 ################
 
 @trip_blueprint.route('/new_trip', methods=['GET', 'POST'])
+@login_required
 def new_trip():
     form = NewTripForm(request.form)
     if form.validate_on_submit():
@@ -34,7 +35,7 @@ def new_trip():
             start_date=form.start_date.data,
             end_date=form.end_date.data
         )
-        db.session.add(location)
+        db.session.add(form)
         db.session.commit()
 
 

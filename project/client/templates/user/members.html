@@ -3,8 +3,7 @@
   <h1>Welcome, <em>{{ current_user.email }}</em>!</h1>
   <h3>These are your current trips.</h3>
 
-  <form action="#">
-    <input type="submit" value="Create New Trip" />
-  </form>
-
+  <a href="/new_trip" class="btn btn-info" role="button">
+      Create a new trip
+  </a>
 {% endblock %}
