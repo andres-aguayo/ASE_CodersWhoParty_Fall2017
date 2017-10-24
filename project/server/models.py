@@ -7,12 +7,11 @@ from project.server import app, db, bcrypt
 
 '''
 helper table for many-to-many relationship b/w User and Trip
-'''
 users_trips = db.Table('users_trips',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('trip_id',db.Integer, db.ForeignKey('trip.id'), primary_key=True)
 )
-
+'''
 
 class User(db.Model):
 
@@ -23,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
-    trips = db.relationship('Trip', secondary=users_trips, lazy='subquery', backref=db.backref('users', lazy=True))
+    #trips = db.relationship('Trip', secondary=users_trips, lazy='subquery', backref=db.backref('users', lazy=True))
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -59,16 +58,37 @@ class Trip(db.Model):
     # we should add date constraitns: start_date < end_date
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    users = db.relationship('User', secondary=users_trips, lazy='subquery', backref=db.backref('trips', lazy=True))
+
+    # implement relational stuff later
+    #users = db.relationship('User', secondary=users_trips, lazy='subquery', backref=db.backref('trips', lazy=True))
 
     def __init__(self, name, location, start_date, end_date, users, itineraries):
         self.name = name
         self.location = location
         self.start_date = start_date
         self.end_date = end_date
-        self.users = users
+        #self.users = users
         #self.itineraries = itineraries
 
     def __repr__(self):
         return '<Trip {0}'.format(self.name)
 
+class Itinerary(db.Model):
+
+    __tablename__ = "itineraries"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), nullable=False)
+    events = db.relationship("Event",back_populates="itinerary")
+
+class Event(db.Model):
+
+    __tablename__ = "events"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    start = db.Column(db.DateTime, nullable=False)
+    end = db.Column(db.DateTime, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.id'))
+    itinerary = db.relationship("Itinerary", back_populates="events")
