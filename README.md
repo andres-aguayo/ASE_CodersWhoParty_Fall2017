@@ -36,8 +36,11 @@ spring break to a beach, scheduLIT makes group planning and coordination a breez
 ### Basics
 
 1. Create and activate a virtualenv
-1. Install the requirements
-  - $ pip install -r requirements.txt
+2. Install the requirements
+
+```sh 
+  $ pip install -r requirements.txt
+```
 
 ### Set Environment Variables
 
