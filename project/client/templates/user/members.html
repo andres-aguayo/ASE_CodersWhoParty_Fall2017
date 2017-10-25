@@ -1,10 +1,17 @@
 {% extends "_base.html" %}
 {% block content %}
   <h1>Welcome, <em>{{ current_user.email }}</em>!</h1>
-  <h3>These are your current trips.</h3>
-
   <form action="#">
     <p><a href="{{ url_for('user.newtrip') }}">Create New Trip</a>?</p>
   </form>
+
+  <h3>These are your current trips:</h3>
+  <table>
+    {% for trip in all_trips %}
+    <tr>
+      <td>{{ trip.name }} </td>
+    </tr>
+    {% endfor %}
+  </table>
 
 {% endblock %}

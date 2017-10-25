@@ -6,11 +6,11 @@
 #################
 
 from flask import render_template, Blueprint, url_for, \
-    redirect, flash, request
-from flask_login import login_user, logout_user, login_required
+    redirect, flash, request, session
+from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
-from project.server.models import User
+from project.server.models import User, Trip
 from project.server.user.forms import LoginForm, RegisterForm, TripForm
 
 
@@ -19,6 +19,7 @@ from project.server.user.forms import LoginForm, RegisterForm, TripForm
 ################
 
 user_blueprint = Blueprint('user', __name__,)
+
 
 
 ################
@@ -47,6 +48,17 @@ def register():
 @login_required
 def newtrip():
     form= TripForm(request.form)
+    if form.validate_on_submit():
+        trip = Trip(
+            name = form.name.data,
+            location = form.location.data,
+            start_date = form.start_date.data,
+            end_date = form.end_date.data,
+            user_ids = current_user
+        )
+        db.session.add(trip)
+        db.session.commit()
+        return redirect(url_for("user.members"))
     return render_template('user/newtrip.html', form=form)
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
@@ -76,7 +88,13 @@ def logout():
 @user_blueprint.route('/members')
 @login_required
 def members():
-    return render_template('user/members.html')
+#    user_trips = Trip.query.filter(session['current_user'] in Trip.user_ids).all()
+#    helper = session['current_user']
+    helper = current_user
+    all_trips = Trip.query.filter(Trip.user_ids.contains(helper)).all()
+    return render_template('user/members.html', all_trips= all_trips)
+    #return render_template('user/members.html')
+
 
 @user_blueprint.route('/calex')
 @login_required
