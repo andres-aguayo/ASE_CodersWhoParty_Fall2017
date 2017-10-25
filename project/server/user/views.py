@@ -77,3 +77,8 @@ def logout():
 @login_required
 def members():
     return render_template('user/members.html')
+
+@user_blueprint.route('/calex')
+@login_required
+def calex():
+    return render_template('user/calex.html')
