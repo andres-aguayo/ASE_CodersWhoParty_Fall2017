@@ -90,3 +90,10 @@ With coverage:
 ```sh
 $ python manage.py cov
 ```
+
+Whenever there are changes to the database run these commands:
+
+```sh
+$ rm -rf migrations
+$ ./create_db.sh
+```
