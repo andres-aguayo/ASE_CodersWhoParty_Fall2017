@@ -2,7 +2,7 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, DateField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
@@ -35,5 +35,5 @@ class RegisterForm(FlaskForm):
 class TripForm(FlaskForm):
     name = StringField('Name', [DataRequired()])
     location = StringField('Location', [DataRequired()])
-    start_date = StringField('Start Date', [DataRequired()])
-    end_date = StringField('End Date', [DataRequired()])
+    start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+    end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')

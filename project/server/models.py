@@ -8,8 +8,8 @@ from project.server import app, db, bcrypt
 
 #helper table for many-to-many relationship b/w User and Trip
 users_trips = db.Table('users_trips', db.Model.metadata,
-    db.Column('user_ids', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('trip_id',db.Integer, db.ForeignKey('trips.id'), primary_key=True)
+    db.Column('user', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('trip',db.Integer, db.ForeignKey('trips.id'), primary_key=True)
 )
 
 
@@ -22,9 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
-    trip_ids = db.relationship("Trip", secondary= users_trips, back_populates = "user_ids")
-    #trips = db.relationship('Trip', backref='all_trips', lazy='dynamic')
-    #trips = db.relationship('Trip', lazy='subquery', backref=db.backref('users', lazy=True))
+    trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -57,21 +55,16 @@ class Trip(db.Model):
     name = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     # we should add date constraitns: start_date < end_date
-    start_date = db.Column(db.String(255), nullable=False)
-    end_date = db.Column(db.String(255), nullable=False)
-    user_ids = db.relationship("User", secondary = users_trips, back_populates= "trip_ids")
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    users = db.relationship("User", secondary = users_trips, back_populates= "trips")
 
-    # implement relational stuff later
-    #users = db.relationship('User', secondary=users_trips, lazy='subquery', backref=db.backref('trips', lazy=True))
-    #def __init__(self, name, location, start_date, end_date, users, itineraries):
-    def __init__(self, name, location, start_date, end_date, user_ids):
+    def __init__(self, name, location, start_date, end_date, user):
         self.name = name
         self.location = location
         self.start_date = start_date
         self.end_date = end_date
-        self.user_ids.append(user_ids)
-        #self.users = users
-        #self.itineraries = itineraries
+        self.users.append(user)
 
     def __repr__(self):
         return '<Trip {0}'.format(self.name)
