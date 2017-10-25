@@ -1,17 +1,35 @@
 {% extends "_base.html" %}
 {% block content %}
   <h1>Welcome, <em>{{ current_user.email }}</em>!</h1>
-  <form action="#">
-    <p><a href="{{ url_for('user.newtrip') }}">Create New Trip</a>?</p>
-  </form>
 
-  <h3>These are your current trips:</h3>
-  <table>
-    {% for trip in all_trips %}
-    <tr>
-      <td>{{ trip.name }} </td>
-    </tr>
-    {% endfor %}
-  </table>
+  {% if all_trips %}
+  <div class="container">
+    <h3>These are your current trips:</h3>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Start date</th>
+          <th>End date</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for trip in all_trips %}
+        <tr>
+          <td>{{ trip.name }}</td>  
+          <td>{{ trip.location }}</td>
+          <td>{{ trip.start_date }}</td>
+          <td>{{ trip.end_date }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <h4>You have no trips! Create a trip below.</h4>
+  {% endif %}
+
+  <a href="{{ url_for('user.newtrip') }}" class="btn btn-success">Create New Trip</a>
 
 {% endblock %}
