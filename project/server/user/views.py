@@ -54,7 +54,7 @@ def newtrip():
             location = form.location.data,
             start_date = form.start_date.data,
             end_date = form.end_date.data,
-            user_ids = current_user
+            user = current_user
         )
         db.session.add(trip)
         db.session.commit()
@@ -89,7 +89,7 @@ def logout():
 @login_required
 def trips():
     helper = current_user
-    all_trips = Trip.query.filter(Trip.user_ids.contains(helper)).all()
+    all_trips = Trip.query.filter(Trip.users.contains(helper)).all()
     return render_template('user/trips.html', all_trips= all_trips)
 
 
