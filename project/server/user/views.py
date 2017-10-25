@@ -40,7 +40,7 @@ def register():
         login_user(user)
 
         flash('Thank you for registering.', 'success')
-        return redirect(url_for("user.members"))
+        return redirect(url_for("user.trips"))
 
     return render_template('user/register.html', form=form)
 
@@ -58,7 +58,7 @@ def newtrip():
         )
         db.session.add(trip)
         db.session.commit()
-        return redirect(url_for("user.members"))
+        return redirect(url_for("user.trips"))
     return render_template('user/newtrip.html', form=form)
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
@@ -70,7 +70,7 @@ def login():
                 user.password, request.form['password']):
             login_user(user)
             flash('You are logged in. Welcome!', 'success')
-            return redirect(url_for('user.members'))
+            return redirect(url_for('user.trips'))
         else:
             flash('Invalid email and/or password.', 'danger')
             return render_template('user/login.html', form=form)
@@ -85,15 +85,12 @@ def logout():
     return redirect(url_for('main.home'))
 
 
-@user_blueprint.route('/members')
+@user_blueprint.route('/trips')
 @login_required
-def members():
-#    user_trips = Trip.query.filter(session['current_user'] in Trip.user_ids).all()
-#    helper = session['current_user']
+def trips():
     helper = current_user
     all_trips = Trip.query.filter(Trip.user_ids.contains(helper)).all()
-    return render_template('user/members.html', all_trips= all_trips)
-    #return render_template('user/members.html')
+    return render_template('user/trips.html', all_trips= all_trips)
 
 
 @user_blueprint.route('/calex')
