@@ -23,8 +23,6 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
-    #trips = db.relationship('Trip', backref='all_trips', lazy='dynamic')
-    #trips = db.relationship('Trip', lazy='subquery', backref=db.backref('users', lazy=True))
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -57,13 +55,10 @@ class Trip(db.Model):
     name = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     # we should add date constraitns: start_date < end_date
-    start_date = db.Column(db.String(255), nullable=False)
-    end_date = db.Column(db.String(255), nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
     users = db.relationship("User", secondary = users_trips, back_populates= "trips")
 
-    # implement relational stuff later
-    #users = db.relationship('User', secondary=users_trips, lazy='subquery', backref=db.backref('trips', lazy=True))
-    #def __init__(self, name, location, start_date, end_date, users, itineraries):
     def __init__(self, name, location, start_date, end_date, user):
         self.name = name
         self.location = location
