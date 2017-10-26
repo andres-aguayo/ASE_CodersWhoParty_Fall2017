@@ -1,0 +1,68 @@
+{% extends "_base.html" %}
+{% block content %}
+  <h1>Welcome to your trip: {{name}} </h1>
+
+  <h3> View your itinerary here </h3>
+  <a href= {{ url_for('user.itinerary', name = name2) }} class="btn btn-success">My Itinerary</a>
+
+
+
+  {% if user_ids %}
+  <div class="container">
+    <h3> These are your trip-mates! Click on their name to see their itineraries! </h3>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Friends!</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for user in user_ids %}
+        <tr>
+          <td>
+            <a href= {{url_for("user.itinerary", name = user.email)}}>
+            {{ user.email }}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3> You can never have too many friends, add more here! </h3>
+  <div class="container">
+  <div class="row">
+  </div>
+  <div class="row">
+          <form action="" class="search-form">
+              <div class="form-group has-feedback">
+              <label for="search" class="sr-only">Search</label>
+              <input type="text" class="form-control" name="search" id="search" placeholder="search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+          </form>
+  </div>
+</div>
+  <a class="btn btn-success">Send Invite(s)</a>
+
+  {% else %}
+    <h3> You have no friends on this trip yet! Send them invites below! </h3>
+    <div class="container">
+    <div class="row">
+    </div>
+    <div class="row">
+            <form action="" class="search-form">
+                <div class="form-group has-feedback">
+            		<label for="search" class="sr-only">Search</label>
+            		<input type="text" class="form-control" name="search" id="search" placeholder="search">
+              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+            	</div>
+            </form>
+    </div>
+</div>
+  <a class="btn btn-success">Send Invite(s)</a>
+  {% endif %}
+
+
+
+{% endblock %}

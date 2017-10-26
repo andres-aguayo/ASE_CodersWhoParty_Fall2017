@@ -90,8 +90,22 @@ def logout():
 def trips():
     helper = current_user
     all_trips = Trip.query.filter(Trip.users.contains(helper)).all()
-    return render_template('user/trips.html', all_trips= all_trips)
+    url = url_for("user.newtrip")
+    return render_template('user/trips.html', all_trips= all_trips, url = url)
 
+@user_blueprint.route('/specific_trip')
+@login_required
+def specific_trip():
+    message = request.args['name']
+    #query to find all friends in this specific trip
+    #users_involved = Trip.query.filter_by(name=message).all()
+    return render_template('user/specific_trip.html', name = message, name2 = message)
+
+@user_blueprint.route('/itinerary')
+@login_required
+def itinerary():
+    trip_name = request.args['name']
+    return render_template('user/itinerary.html', trip_name=trip_name)
 
 @user_blueprint.route('/calex')
 @login_required
