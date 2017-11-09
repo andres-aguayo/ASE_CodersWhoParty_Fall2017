@@ -97,7 +97,7 @@ class TestUserBlueprint(BaseTestCase):
         self.assertIn(b'<h1>Please Register</h1>\n', response.data)
 
     def test_user_registration(self):
-        # Ensure registration behaves correctlys.
+        # Ensure registration behaves correctly.
         with self.client:
             response = self.client.post(
                 '/register',
