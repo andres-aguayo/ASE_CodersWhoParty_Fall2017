@@ -88,8 +88,7 @@ def logout():
 @user_blueprint.route('/trips')
 @login_required
 def trips():
-    helper = current_user
-    all_trips = Trip.query.filter(Trip.users.contains(helper)).all()
+    all_trips = Trip.query.filter(Trip.users.contains(current_user)).all()
     url = url_for("user.newtrip")
     return render_template('user/trips.html', all_trips= all_trips, url = url)
 
