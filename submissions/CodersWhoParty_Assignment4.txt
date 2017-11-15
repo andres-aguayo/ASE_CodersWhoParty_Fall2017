@@ -1,9 +1,9 @@
 Coders Who Party
 Dominique Gordon, Matias Lirman, Julian Silerio, Andres Aguayo
 
-1. Our original class diagrams still hold for our current project. The pdf has been attached.
+Our original class diagrams still hold for our current project. The pdf has been attached.
 
-2. Test cases needed (EP = Equivalence Partition)
+Test cases needed (EP = Equivalence Partition)
     1. Ensure app is in testing mode (input: app/self)
         EP: environment can be either development or production
         EP: testing suite and debugging is turned on or off
