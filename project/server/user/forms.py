@@ -37,3 +37,6 @@ class TripForm(FlaskForm):
     location = StringField('Location', [DataRequired()])
     start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
     end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+
+class ItineraryForm(FlaskForm):
+    name = StringField('Name', [DataRequired()])

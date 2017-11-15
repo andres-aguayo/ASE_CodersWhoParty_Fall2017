@@ -10,7 +10,7 @@ from flask import render_template, Blueprint, url_for, \
 from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
-from project.server.models import User, Trip
+from project.server.models import User, Trip, Itinerary
 from project.server.user.forms import LoginForm, RegisterForm, TripForm
 
 
@@ -26,6 +26,9 @@ user_blueprint = Blueprint('user', __name__,)
 #### routes ####
 ################
 
+'''
+User
+'''
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
@@ -44,23 +47,6 @@ def register():
 
     return render_template('user/register.html', form=form)
 
-@user_blueprint.route('/newtrip', methods = ['GET','POST'])
-@login_required
-def newtrip():
-    form= TripForm(request.form)
-    if form.validate_on_submit():
-        trip = Trip(
-            name = form.name.data,
-            location = form.location.data,
-            start_date = form.start_date.data,
-            end_date = form.end_date.data,
-            user = current_user
-        )
-        db.session.add(trip)
-        db.session.commit()
-        return redirect(url_for("user.trips"))
-    return render_template('user/newtrip.html', form=form)
-
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
@@ -76,7 +62,6 @@ def login():
             return render_template('user/login.html', form=form)
     return render_template('user/login.html', title='Please Login', form=form)
 
-
 @user_blueprint.route('/logout')
 @login_required
 def logout():
@@ -84,6 +69,29 @@ def logout():
     flash('You were logged out. Bye!', 'success')
     return redirect(url_for('main.home'))
 
+'''
+Trip
+'''
+@user_blueprint.route('/newtrip', methods=['GET','POST'])
+@login_required
+def newtrip():
+    form= TripForm(request.form)
+    if form.validate_on_submit():
+        trip = Trip(
+            name = form.name.data,
+            location = form.location.data,
+            start_date = form.start_date.data,
+            end_date = form.end_date.data,
+            user = current_user
+        )
+        itinerary = Itinerary(
+            name = form.name.data
+        )
+        db.session.add(trip)
+        db.session.add(itinerary)
+        db.session.commit()
+        return redirect(url_for("user.trips"))
+    return render_template('user/newtrip.html', form=form)
 
 @user_blueprint.route('/trips')
 @login_required
@@ -92,19 +100,23 @@ def trips():
     url = url_for("user.newtrip")
     return render_template('user/trips.html', all_trips= all_trips, url = url)
 
-@user_blueprint.route('/specific_trip')
+@user_blueprint.route('/trip/<trip_id>')
 @login_required
-def specific_trip():
+def specific_trip(trip_id):
     message = request.args['name']
     #query to find all friends in this specific trip
     #users_involved = Trip.query.filter_by(name=message).all()
-    return render_template('user/specific_trip.html', name = message, name2 = message)
+    return render_template('user/specific_trip.html', name=message, name2=message)
 
-@user_blueprint.route('/itinerary')
+'''
+Itinerary
+'''
+@user_blueprint.route('/trip/<trip_id>/itinerary/<user_id>')
 @login_required
-def itinerary():
-    trip_name = request.args['name']
-    return render_template('user/itinerary.html', trip_name=trip_name)
+def itinerary(trip_id, user_id):
+
+    return render_template('user/itinerary.html', trip=trip)
+
 
 @user_blueprint.route('/calex')
 @login_required
