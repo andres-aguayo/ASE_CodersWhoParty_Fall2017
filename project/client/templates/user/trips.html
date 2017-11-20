@@ -18,7 +18,7 @@
       {% for trip in all_trips %}
         <tr>
           <td>
-            <a href= {{url_for("user.specific_trip", name = trip.name)}}>
+            <a href= {{url_for("user.specific_trip",trip_id=trip.id)}}>
             {{ trip.name }}
           </td>
           <td>{{ trip.location }}</td>

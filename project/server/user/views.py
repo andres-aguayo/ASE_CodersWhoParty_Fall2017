@@ -100,13 +100,15 @@ def trips():
     url = url_for("user.newtrip")
     return render_template('user/trips.html', all_trips= all_trips, url = url)
 
-@user_blueprint.route('/trip/<trip_id>')
+@user_blueprint.route('/trips/<trip_id>')
 @login_required
 def specific_trip(trip_id):
-    message = request.args['name']
+    #trip_name = request.args['trip_name']
+    trip_id = request.args.get('trip_id')
+    trip = Trip.query.filter_by(id=trip_id)
     #query to find all friends in this specific trip
     #users_involved = Trip.query.filter_by(name=message).all()
-    return render_template('user/specific_trip.html', name=message, name2=message)
+    return render_template('user/specific_trip.html', trip=trip)
 
 '''
 Itinerary
