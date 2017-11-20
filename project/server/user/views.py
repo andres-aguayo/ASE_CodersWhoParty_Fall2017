@@ -21,7 +21,6 @@ from project.server.user.forms import LoginForm, RegisterForm, TripForm
 user_blueprint = Blueprint('user', __name__,)
 
 
-
 ################
 #### routes ####
 ################
@@ -97,17 +96,14 @@ def newtrip():
 @login_required
 def trips():
     all_trips = Trip.query.filter(Trip.users.contains(current_user)).all()
-    url = url_for("user.newtrip")
-    return render_template('user/trips.html', all_trips= all_trips, url = url)
+    return render_template('user/trips.html', all_trips= all_trips)
 
-@user_blueprint.route('/trips/<trip_id>')
+@user_blueprint.route('/trips/<trip_id>', methods=['GET', 'POST'])
 @login_required
 def specific_trip(trip_id):
-    #trip_name = request.args['trip_name']
-    trip_id = request.args.get('trip_id')
-    trip = Trip.query.filter_by(id=trip_id)
-    #query to find all friends in this specific trip
-    #users_involved = Trip.query.filter_by(name=message).all()
+
+    # looks for trip, if its not there, then 404s
+    trip = Trip.query.filter_by(id=trip_id).first_or_404()
     return render_template('user/specific_trip.html', trip=trip)
 
 '''
