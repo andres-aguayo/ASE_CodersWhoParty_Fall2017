@@ -1,36 +1,59 @@
 Coders Who Party
 Dominique Gordon, Matias Lirman, Julian Silerio, Andres Aguayo
 
-1. Our original class diagrams still hold for our current project.
-2. Test cases needed
-    1. Ensure we are in development
-    2. Ensure the app is testing
-    3. Ensure we are in production
-    4. Ensure flask is set up
-    5. Ensure about route behaves correctly
-    6. Ensure 404 error is handled
-    7. Ensure login behaves correctly with correct credentials
-    8. Ensure logout behaves correctly - regarding the session
-    9. Ensure logout route requires logged in user
-    10. Ensure member route requires logged in user.
-    11. Ensure correct data validates.
-    12. Ensure invalid email format throws error.
-    13. Ensure id is correct for the current/logged in user.
-    14. Ensure that registered_on is a datetime.
-    15. Ensure given password is correct after unhashing.
-    16. Ensure user can't login when the pasword is incorrect.
-    17. Ensure about route behaves correctly.
-    18. Ensure registration behaves correctly.
-    19. Ensure trip is added
-    20. Ensure dates of trip are valid
-    21. Ensure trip's user is valid
+Our original class diagrams still hold for our current project. The pdf has been attached.
 
+Test cases needed (EP = Equivalence Partition)
+    1. Ensure app is in testing mode (input: app/self)
+        EP: environment can be either development or production
+        EP: testing suite and debugging is turned on or off
+    2. Ensure flask is set up (input: main page url)
+        EP: response codes are handled when querying client (200, 404, etc)
+        EP: content of page is accurate ("Welcome!", login/register button, etc)
+        EP: client routes return correct page ("About" page, etc)
+    3. Ensure correct login information returns (input: valid login email/password)
+        EP: correct page data ("Welcome", "Login", "Members", etc)
+        EP: correct current_user email
+        EP: current_user is active (or inactive)
+        EP: correct status code (200)
+    4. Ensure logout behaves correctly (input: active session, logout url)
+        EP: correct page data ("You were logged out. Bye!")
+        EP: current_user is no longer active (or still active)
+    5. Ensure logout requires login (input: inactive session, logout url)
+        EP: correct page data ("Please login to access this page")
+    6. Ensure member page requires login (input: inactive session, members page url)
+        EP: correct page data ("Please login to access this page")
+    7. Ensure form validates correct information (input: valid/invalid login email/password)
+        EP: LoginForm validation returns true or false
+    8. Ensure correct user ID is returned (input: valid login email/password)
+        EP: current_user.id returns correct integer
+    9. Ensure registered_on is a datetime (input: valid login email/password, database query for User)
+        EP: user.registered_on returns a datetime (or invalid type)
+    10. Ensure password hashing returns correct value (input: database query for User, user.password)
+        EP: decrypting password hash returns correct password string (or incorrect string)
+    11. Ensure invalid information does not allow login (input: valid username, invalid password)
+        EP: correct page data ("Invalid email and/or password")
+    12. Ensure register button routes correctly (input: register page url)
+        EP: correct page data ("Please Register")
+    13. Ensure registration page behaves correctly (input: register page url, valid form email/password/confirm password)
+        EP: correct page data ("Welcome")
+        EP: correct current_user email string
+        EP: current_user is active (or inactive)
+        EP: correct response code (200)
+    14. Ensure trip creation behaves correctly (input: valid session, valid form inputs for trip page url, database query for trip)
+        EP: created trip exists (or does not exist) in database
+    15. Ensure form does not create trip with invalid dates (input: valid session, invalid form date input, database query for trip)
+        EP: created trip does not exist (or does exist) in database
+        
+Implemented test cases are on github under project>tests.
 
 https://github.com/andres-aguayo/ASE_CodersWhoParty_Fall2017
+        
+For testing, we used python's unittest and base packages. Although our lack of experience in these packages made for some pain
+in writing correct code, it became fairly straightforward once we got the hang of the necessary functions included (client posts, 
+form inputs, etc). Another challenge we faced was trying to test for certain behaviors in our database -- i.e. figuring out what
+our SQL database already tests for under the hood and how that would make some of our test cases redundant or obsolete. See one 
+attempt that resulted in this situation in the comments at the bottom of the project>tests>test_trip.py file.
 
-
-3. Implemented test cases are on github under project>tests
-4. We did this.
-5. We did this.
-6. Both pairs were responsible for all parts. We ended up all meeting as a full group on multiple occasions in order to complete this assignment.
+Both pairs were responsible for all parts. We ended up all meeting as a full group on multiple occasions in order to complete this assignment.
 
