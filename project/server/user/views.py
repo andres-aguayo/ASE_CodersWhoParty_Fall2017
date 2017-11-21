@@ -10,7 +10,7 @@ from flask import render_template, Blueprint, url_for, \
 from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
-from project.server.models import User, Trip, Itinerary
+from project.server.models import User, Trip, Itinerary, Event
 from project.server.user.forms import LoginForm, RegisterForm, TripForm
 
 
@@ -71,9 +71,9 @@ def logout():
 '''
 Trip
 '''
-@user_blueprint.route('/newtrip', methods=['GET','POST'])
+@user_blueprint.route('/new_trip', methods=['GET','POST'])
 @login_required
-def newtrip():
+def new_trip():
     form= TripForm(request.form)
     if form.validate_on_submit():
         trip = Trip(
@@ -84,13 +84,15 @@ def newtrip():
             user = current_user
         )
         itinerary = Itinerary(
-            name = form.name.data
+            name = form.name.data,
+            trip = trip,
+            user = current_user
         )
         db.session.add(trip)
         db.session.add(itinerary)
         db.session.commit()
         return redirect(url_for("user.trips"))
-    return render_template('user/newtrip.html', form=form)
+    return render_template('user/new_trip.html', form=form)
 
 @user_blueprint.route('/trips')
 @login_required
@@ -104,15 +106,20 @@ def specific_trip(trip_id):
 
     # looks for trip, if its not there, then 404s
     trip = Trip.query.filter_by(id=trip_id).first_or_404()
-    return render_template('user/specific_trip.html', trip=trip)
+    users = User.query.filter(User.trips.contains(trip)).all()
+    users.remove(current_user)
+    return render_template('user/specific_trip.html', trip=trip, users=users, current_user=current_user)
 
 '''
 Itinerary
 '''
-@user_blueprint.route('/trip/<trip_id>/itinerary/<user_id>')
+@user_blueprint.route('/trips/<trip_id>/itinerary/<user_id>')
 @login_required
 def itinerary(trip_id, user_id):
 
+    trip = Trip.query.filter_by(id=trip_id).first_or_404()
+    #itinerary = Itinerary.query.filtery_by(trip=trip, )
+    #events = Event.query.filter()
     return render_template('user/itinerary.html', trip=trip)
 
 

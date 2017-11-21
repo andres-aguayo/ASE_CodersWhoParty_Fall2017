@@ -23,6 +23,7 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
+    itineraries = db.relationship("Itinerary", back_populates="user")
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -58,6 +59,7 @@ class Trip(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     users = db.relationship("User", secondary = users_trips, back_populates= "trips")
+    itineraries = db.relationship("Itinerary", back_populates="trip")
 
     def __init__(self, name, location, start_date, end_date, user):
         self.name = name
@@ -76,6 +78,14 @@ class Itinerary(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     events = db.relationship("Event",back_populates="itinerary")
+    trip = db.relationship("Trip", back_populates="itineraries")
+    trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
+    user = db.relationship("User", back_populates="itineraries")
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    def __init__(self, name, trip, user):
+        self.name = name
+        self.trip = trip
+        self.user = user
 
 class Event(db.Model):
 
