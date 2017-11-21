@@ -87,6 +87,9 @@ class Itinerary(db.Model):
         self.trip = trip
         self.user = user
 
+# event-itinerary relationship needs to be changed to many to many
+# similar to how many users can have many trips and vice versa
+# many itineraries can have many events
 class Event(db.Model):
 
     __tablename__ = "events"

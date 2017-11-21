@@ -25,9 +25,10 @@ user_blueprint = Blueprint('user', __name__,)
 #### routes ####
 ################
 
-'''
-User
-'''
+##########
+## User ##
+##########
+
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
@@ -68,9 +69,17 @@ def logout():
     flash('You were logged out. Bye!', 'success')
     return redirect(url_for('main.home'))
 
+
+##########
+## Trip ##
+##########
+
 '''
-Trip
+need to implement empty functions
+
+otherwise trip functionality looking all right
 '''
+
 @user_blueprint.route('/new_trip', methods=['GET','POST'])
 @login_required
 def new_trip():
@@ -110,19 +119,79 @@ def specific_trip(trip_id):
     users.remove(current_user)
     return render_template('user/specific_trip.html', trip=trip, users=users, current_user=current_user)
 
+# IMPLEMENT ME
+def delete_trip():
+    pass
+
+# IMPLEMENT ME
 '''
-Itinerary
+whats the functionality here besides changing basic trip info?
+should we be able to remove users from trip?
 '''
+def edit_trip():
+    pass
+
+
+###############
+## Itinerary ##
+###############
+
+'''
+thoughts for thots
+
+should a user be able to delete their itinerary?
+or should they just be able to leave a trip and auto-delete itinerary?
+
+how should editing an itinerary work?
+is that really just editing the events of an itinerary?
+'''
+
 @user_blueprint.route('/trips/<trip_id>/itinerary/<user_id>')
 @login_required
 def itinerary(trip_id, user_id):
-
+    # query database for relevant info
     trip = Trip.query.filter_by(id=trip_id).first_or_404()
-    #itinerary = Itinerary.query.filtery_by(trip=trip, )
-    #events = Event.query.filter()
-    return render_template('user/itinerary.html', trip=trip)
+    user = User.query.filter_by(id=user_id).first_or_404()
+    itinerary = Itinerary.query.filter_by(trip=trip, user=user).first_or_404()
+    events = itinerary.events
 
+    # check if user is current user for dynamic web page
+    is_current_user = False
+    if user == current_user:
+        is_current_user = True
 
+    return render_template('user/itinerary.html', trip=trip, user=user, events=events, is_current_user=is_current_user)
+
+###########
+## EVENT ##
+###########
+
+'''
+this shit below needs to be implemented
+'''
+
+# IMPLEMENT ME
+def event():
+    pass
+
+# IMPLEMENT ME
+def new_event():
+    pass
+
+# IMPLEMENT ME
+def edit_event():
+    pass
+
+# IMPLEMENT ME
+'''
+should only be able to be deleted by person who created event?
+or should an event be deleted once everyone deletes it?
+why not both?
+'''
+def delete_event():
+    pass
+
+# what are we doing with this?
 @user_blueprint.route('/calex')
 @login_required
 def calex():
