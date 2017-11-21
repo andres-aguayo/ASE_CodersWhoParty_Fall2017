@@ -1,27 +1,24 @@
 {% extends "_base.html" %}
 {% block content %}
-  <h1>Welcome to your trip: {{name}} </h1>
-
-  <h3> View your itinerary here </h3>
-  <a href= {{ url_for('user.itinerary', name = name2) }} class="btn btn-success">My Itinerary</a>
+  <h1>Welcome to your trip: {{ trip.name }} </h1>
 
 
-
-  {% if user_ids %}
   <div class="container">
-    <h3> These are your trip-mates! Click on their name to see their itineraries! </h3>
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>Friends!</th>
-        </tr>
-      </thead>
+    <h3>Trip itineraries</h3>  
+    <table class="table table-hover">
       <tbody>
-      {% for user in user_ids %}
         <tr>
           <td>
-            <a href= {{url_for("user.itinerary", name = user.email)}}>
-            {{ user.email }}
+            <a href={{ url_for("user.itinerary", trip_id=trip.id, user_id=current_user.id)}}>
+              Your itinerary
+            </a>
+          </td>
+        </tr>
+        {% for user in users %}
+        <tr>
+          <td>
+            <a href= {{url_for("user.itinerary", trip_id=trip.id, user_id=user.id)}}>
+            {{ user.email }}'s Itinerary
           </td>
         </tr>
       {% endfor %}
@@ -29,39 +26,20 @@
     </table>
   </div>
 
-  <h3> You can never have too many friends, add more here! </h3>
+  <!-- not working yet -->
+  <h3> Add more friends</h3>
   <div class="container">
-  <div class="row">
-  </div>
-  <div class="row">
-          <form action="" class="search-form">
-              <div class="form-group has-feedback">
-              <label for="search" class="sr-only">Search</label>
-              <input type="text" class="form-control" name="search" id="search" placeholder="search">
-                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-            </div>
-          </form>
-  </div>
-</div>
-  <a class="btn btn-success">Send Invite(s)</a>
-
-  {% else %}
-    <h3> You have no friends on this trip yet! Send them invites below! </h3>
-    <div class="container">
     <div class="row">
+      <form action="" class="search-form">
+        <div class="form-group has-feedback">
+          <label for="search" class="sr-only">Search</label>
+            <input type="text" class="form-control" name="search" id="search" placeholder="search">
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+      </form>
     </div>
-    <div class="row">
-            <form action="" class="search-form">
-                <div class="form-group has-feedback">
-            		<label for="search" class="sr-only">Search</label>
-            		<input type="text" class="form-control" name="search" id="search" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
-            	</div>
-            </form>
-    </div>
-</div>
+  </div>
   <a class="btn btn-success">Send Invite(s)</a>
-  {% endif %}
 
 
 

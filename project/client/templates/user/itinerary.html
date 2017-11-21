@@ -1,6 +1,45 @@
 {% extends '_base.html' %}
 {% block content %}
-<h1>Welcome to your {{trip_name}} itinerary!</h1>
+<h1>Welcome to {{ user.email }}'s {{ trip.name }} itinerary!</h1>
+
+{% if events %}
+  <div class="container">
+    <h3>Events on this itinerary</h3>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Start date</th>
+          <th>End date</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for event in events %}
+        <tr>
+          <td>
+            {{ event.name }}
+          </td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.start_date }}</td>
+          <td>{{ event.end_date }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  
+  {% if is_current_user %}  
+  <h4>You have no events! Create a trip below.</h4>
+  {% else %}
+  <h4>No events found</h4>
+  {% endif %}
+  {% endif %}
+
+  <a href=# class="btn btn-success">Create New Event</a>
+
+
 
 
 {% endblock %}
