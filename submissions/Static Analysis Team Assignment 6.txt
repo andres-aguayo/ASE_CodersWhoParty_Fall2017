@@ -1,0 +1,235 @@
+models.py:
+************* Module project.server.models
+C: 11, 0: Wrong continued indentation (add 19 spaces).
+    db.Column('user', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    ^                  | (bad-continuation)
+C: 12, 0: Wrong continued indentation (add 19 spaces).
+    db.Column('trip',db.Integer, db.ForeignKey('trips.id'), primary_key=True)
+    ^                  | (bad-continuation)
+C: 12, 0: Exactly one space required after comma
+    db.Column('trip',db.Integer, db.ForeignKey('trips.id'), primary_key=True)
+                    ^ (bad-whitespace)
+C: 13, 0: Wrong continued indentation (add 22 spaces).
+)
+^                     | (bad-continuation)
+C: 25, 0: No space allowed after keyword argument assignment
+    trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
+                                             ^ (bad-whitespace)
+C: 25, 0: No space allowed around keyword argument assignment
+    trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
+                                                                           ^ (bad-whitespace)
+C: 61, 0: No space allowed around keyword argument assignment
+    users = db.relationship("User", secondary = users_trips, back_populates= "trips")
+                                              ^ (bad-whitespace)
+C: 61, 0: No space allowed after keyword argument assignment
+    users = db.relationship("User", secondary = users_trips, back_populates= "trips")
+                                                                           ^ (bad-whitespace)
+C: 80, 0: Exactly one space required after comma
+    events = db.relationship("Event",back_populates="itinerary")
+                                    ^ (bad-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 10, 0: Invalid constant name "users_trips" (invalid-name)
+E: 10,14: Instance of 'SQLAlchemy' has no 'Table' member (no-member)
+E: 11, 4: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 11,22: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 11,34: Instance of 'SQLAlchemy' has no 'ForeignKey' member (no-member)
+E: 12, 4: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 12,21: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 12,33: Instance of 'SQLAlchemy' has no 'ForeignKey' member (no-member)
+C: 16, 0: Missing class docstring (missing-docstring)
+C: 20, 4: Invalid class attribute name "id" (invalid-name)
+E: 20, 9: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 20,19: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 21,12: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 21,22: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E: 22,15: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 22,25: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E: 23,20: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 23,30: Instance of 'SQLAlchemy' has no 'DateTime' member (no-member)
+E: 24,12: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 24,22: Instance of 'SQLAlchemy' has no 'Boolean' member (no-member)
+E: 25,12: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+E: 26,18: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+C: 36, 4: Missing method docstring (missing-docstring)
+R: 36, 4: Method could be a function (no-self-use)
+C: 39, 4: Missing method docstring (missing-docstring)
+R: 39, 4: Method could be a function (no-self-use)
+C: 42, 4: Missing method docstring (missing-docstring)
+R: 42, 4: Method could be a function (no-self-use)
+C: 45, 4: Missing method docstring (missing-docstring)
+C: 51, 0: Missing class docstring (missing-docstring)
+C: 55, 4: Invalid class attribute name "id" (invalid-name)
+E: 55, 9: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 55,19: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 56,11: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 56,21: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E: 57,15: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 57,25: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E: 59,17: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 59,27: Instance of 'SQLAlchemy' has no 'Date' member (no-member)
+E: 60,15: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 60,25: Instance of 'SQLAlchemy' has no 'Date' member (no-member)
+E: 61,12: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+E: 62,18: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+R: 64, 4: Too many arguments (6/5) (too-many-arguments)
+R: 51, 0: Too few public methods (0/2) (too-few-public-methods)
+C: 74, 0: Missing class docstring (missing-docstring)
+C: 78, 4: Invalid class attribute name "id" (invalid-name)
+E: 78, 9: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 78,19: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 79,11: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 79,21: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E: 80,13: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+E: 81,11: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+E: 82,14: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 82,24: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 82,36: Instance of 'SQLAlchemy' has no 'ForeignKey' member (no-member)
+E: 83,11: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+E: 84,14: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 84,24: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 84,36: Instance of 'SQLAlchemy' has no 'ForeignKey' member (no-member)
+R: 74, 0: Too few public methods (0/2) (too-few-public-methods)
+C: 93, 0: Missing class docstring (missing-docstring)
+C: 97, 4: Invalid class attribute name "id" (invalid-name)
+E: 97, 9: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 97,19: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E: 98,12: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 98,22: Instance of 'SQLAlchemy' has no 'DateTime' member (no-member)
+E: 99,10: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E: 99,20: Instance of 'SQLAlchemy' has no 'DateTime' member (no-member)
+E:100,11: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E:100,21: Instance of 'SQLAlchemy' has no 'String' member (no-member)
+E:101,18: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E:101,28: Instance of 'SQLAlchemy' has no 'Text' member (no-member)
+E:102,19: Instance of 'SQLAlchemy' has no 'Column' member (no-member)
+E:102,29: Instance of 'SQLAlchemy' has no 'Integer' member (no-member)
+E:102,41: Instance of 'SQLAlchemy' has no 'ForeignKey' member (no-member)
+E:103,16: Instance of 'SQLAlchemy' has no 'relationship' member (no-member)
+R: 93, 0: Too few public methods (0/2) (too-few-public-methods)
+
+----------------------------------------------------------------------
+Your code has been rated at -38.48/10 (previous run: -38.48/10, +0.00)
+
+
+config.py
+************* Module project.server.config
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  4, 0: Invalid constant name "basedir" (invalid-name)
+R:  7, 0: Too few public methods (0/2) (too-few-public-methods)
+R: 18, 0: Too few public methods (0/2) (too-few-public-methods)
+R: 27, 0: Too few public methods (0/2) (too-few-public-methods)
+R: 38, 0: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 7.93/10
+
+
+views.py
+************* Module project.server.main.views
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 15, 0: Invalid constant name "main_blueprint" (invalid-name)
+C: 24, 0: Missing function docstring (missing-docstring)
+C: 29, 0: Missing function docstring (missing-docstring)
+
+------------------------------------------------------------------
+Your code has been rated at 3.33/10 (previous run: 3.33/10, +0.00)
+
+
+
+forms.py
+************* Module project.server.user.forms
+C: 38, 0: Line too long (101/100) (line-too-long)
+C: 38, 0: Exactly one space required after comma
+    start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+                                                         ^ (bad-whitespace)
+C: 38, 0: Exactly one space required after comma
+    start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+                                                                                  ^ (bad-whitespace)
+C: 39, 0: Exactly one space required after comma
+    end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+                                                     ^ (bad-whitespace)
+C: 39, 0: Exactly one space required after comma
+    end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+                                                                              ^ (bad-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  9, 0: Missing class docstring (missing-docstring)
+C: 14, 0: Missing class docstring (missing-docstring)
+C: 35, 0: Missing class docstring (missing-docstring)
+C: 41, 0: Missing class docstring (missing-docstring)
+
+-----------------------------------
+Your code has been rated at 4.12/10
+
+
+views.py
+************* Module project.server.user.views
+C: 83, 0: Exactly one space required after comma
+@user_blueprint.route('/new_trip', methods=['GET','POST'])
+                                                 ^ (bad-whitespace)
+C: 86, 0: Exactly one space required before assignment
+    form= TripForm(request.form)
+        ^ (bad-whitespace)
+C: 89, 0: No space allowed around keyword argument assignment
+            name = form.name.data,
+                 ^ (bad-whitespace)
+C: 90, 0: No space allowed around keyword argument assignment
+            location = form.location.data,
+                     ^ (bad-whitespace)
+C: 91, 0: No space allowed around keyword argument assignment
+            start_date = form.start_date.data,
+                       ^ (bad-whitespace)
+C: 92, 0: No space allowed around keyword argument assignment
+            end_date = form.end_date.data,
+                     ^ (bad-whitespace)
+C: 93, 0: No space allowed around keyword argument assignment
+            user = current_user
+                 ^ (bad-whitespace)
+C: 96, 0: No space allowed around keyword argument assignment
+            name = form.name.data,
+                 ^ (bad-whitespace)
+C: 97, 0: No space allowed around keyword argument assignment
+            trip = trip,
+                 ^ (bad-whitespace)
+C: 98, 0: No space allowed around keyword argument assignment
+            user = current_user
+                 ^ (bad-whitespace)
+C:110, 0: No space allowed after keyword argument assignment
+    return render_template('user/trips.html', all_trips= all_trips)
+                                                       ^ (bad-whitespace)
+C:120, 0: Line too long (104/100) (line-too-long)
+C:163, 0: Line too long (119/100) (line-too-long)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 21, 0: Invalid constant name "user_blueprint" (invalid-name)
+C: 33, 0: Missing function docstring (missing-docstring)
+E: 40, 8: Instance of 'scoped_session' has no 'add' member (no-member)
+E: 41, 8: Instance of 'scoped_session' has no 'commit' member (no-member)
+C: 51, 0: Missing function docstring (missing-docstring)
+R: 55, 8: Unnecessary "else" after "return" (no-else-return)
+C: 67, 0: Missing function docstring (missing-docstring)
+W: 81,-1: String statement has no effect (pointless-string-statement)
+C: 85, 0: Missing function docstring (missing-docstring)
+W: 95, 8: Redefining name 'itinerary' from outer scope (line 151) (redefined-outer-name)
+E:100, 8: Instance of 'scoped_session' has no 'add' member (no-member)
+E:101, 8: Instance of 'scoped_session' has no 'add' member (no-member)
+E:102, 8: Instance of 'scoped_session' has no 'commit' member (no-member)
+C:108, 0: Missing function docstring (missing-docstring)
+C:114, 0: Missing function docstring (missing-docstring)
+C:123, 0: Missing function docstring (missing-docstring)
+W:130,-1: String statement has no effect (pointless-string-statement)
+C:131, 0: Missing function docstring (missing-docstring)
+W:147,-1: String statement has no effect (pointless-string-statement)
+C:151, 0: Missing function docstring (missing-docstring)
+W:155, 4: Redefining name 'itinerary' from outer scope (line 151) (redefined-outer-name)
+W:171,-1: String statement has no effect (pointless-string-statement)
+C:174, 0: Missing function docstring (missing-docstring)
+C:178, 0: Missing function docstring (missing-docstring)
+C:182, 0: Missing function docstring (missing-docstring)
+W:190,-1: String statement has no effect (pointless-string-statement)
+C:191, 0: Missing function docstring (missing-docstring)
+C:197, 0: Missing function docstring (missing-docstring)
+W:  8, 0: Unused session imported from flask (unused-import)
+W: 13, 0: Unused Event imported from project.server.models (unused-import)
+
+-----------------------------------
+Your code has been rated at 1.69/10
+
