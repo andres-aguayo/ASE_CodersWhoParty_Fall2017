@@ -1,0 +1,11 @@
+Coverage Summary:
+Name                           Stmts   Miss Branch BrPart  Cover
+----------------------------------------------------------------
+project/__init__.py                0      0      0      0   100%
+project/server/__init__.py        33      3      0      0    91%
+project/server/main/views.py       6      0      0      0   100%
+project/server/models.py          66     11      0      0    83%
+project/server/user/forms.py      17      0      0      0   100%
+project/server/user/views.py      78     28     10      0    64%
+----------------------------------------------------------------
+TOTAL                            200     42     10      0    78%
