@@ -11,7 +11,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
 from project.server.models import User, Trip, Itinerary, Event
-from project.server.user.forms import LoginForm, RegisterForm, TripForm
+from project.server.user.forms import LoginForm, RegisterForm, TripForm, EventsForm
 
 
 ################
@@ -160,7 +160,7 @@ def itinerary(trip_id, user_id):
     if user == current_user:
         is_current_user = True
 
-    return render_template('user/itinerary.html', trip=trip, user=user, events=events, is_current_user=is_current_user)
+    return render_template('user/itinerary.html', trip=trip, user=user, events=events, is_current_user=is_current_user, itinerary = itinerary)
 
 ###########
 ## EVENT ##
@@ -175,8 +175,25 @@ def event():
     pass
 
 # IMPLEMENT ME
-def new_event():
-    pass
+@user_blueprint.route('/new_event/<itinerary>', methods=['GET','POST'])
+@login_required
+def new_event(itinerary):
+    form= EventsForm(request.form)
+    if form.validate_on_submit():
+        itinerary = Itinerary.query.filter_by(id=itinerary).first_or_404()
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+        event = Event(
+            name = form.name.data,
+            description = form.description.data,
+            start_time = form.start_time.data.replace(year=start_date.year, month=start_date.month, day=start_date.day),
+            end_time = form.end_time.data.replace(year=end_date.year, month=end_date.month, day=end_date.day),
+            itinerary = itinerary
+        )
+        db.session.add(event)
+        db.session.commit()
+        return redirect(url_for("user.itinerary" , trip_id=itinerary.trip.id, user_id=itinerary.user.id))
+    return render_template('user/new_event.html', form=form)
 
 # IMPLEMENT ME
 def edit_event():

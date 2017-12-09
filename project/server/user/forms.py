@@ -2,7 +2,7 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, DateField
+from wtforms import StringField, PasswordField, DateField, DateTimeField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
@@ -38,5 +38,10 @@ class TripForm(FlaskForm):
     start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
     end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
 
-class ItineraryForm(FlaskForm):
-    name = StringField('Name', [DataRequired()])
+class EventsForm(FlaskForm):
+    name = StringField('Name of Event', [DataRequired()])
+    description = StringField('Description of Event')
+    start_date = DateField('Start Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+    start_time = DateTimeField('Start Time', [DataRequired()],description='HH:MM',format='%H:%M')
+    end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
+    end_time = DateTimeField('End Time', [DataRequired()],description='HH:MM',format='%H:%M')

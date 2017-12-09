@@ -12,6 +12,11 @@ users_trips = db.Table('users_trips', db.Model.metadata,
     db.Column('trip',db.Integer, db.ForeignKey('trips.id'), primary_key=True)
 )
 
+itinerary_events = db.Table('itinerary_events', db.Model.metadata,
+    db.Column('itinerary', db.Integer, db.ForeignKey('itineraries.id'), primary_key = True),
+    db.Column('event', db.Integer, db.ForeignKey('events.id'), primary_key = True)
+)
+
 
 class User(db.Model):
 
@@ -77,11 +82,12 @@ class Itinerary(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
-    events = db.relationship("Event",back_populates="itinerary")
+    events = db.relationship("Event", secondary = itinerary_events, back_populates="itineraries")
     trip = db.relationship("Trip", back_populates="itineraries")
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
     user = db.relationship("User", back_populates="itineraries")
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
     def __init__(self, name, trip, user):
         self.name = name
         self.trip = trip
@@ -95,9 +101,14 @@ class Event(db.Model):
     __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    start = db.Column(db.DateTime, nullable=False)
-    end = db.Column(db.DateTime, nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text)
-    itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.id'))
-    itinerary = db.relationship("Itinerary", back_populates="events")
+    itineraries = db.relationship("Itinerary", secondary = itinerary_events, back_populates="events")
+    def __init__(self, name, description, start_time, end_time, itinerary):
+        self.name = name
+        self.description = description
+        self.start_time = start_time
+        self.end_time = end_time
+        self.itineraries.append(itinerary)

@@ -2,6 +2,7 @@
 {% block content %}
 <h1>Welcome to {{ user.email }}'s {{ trip.name }} itinerary!</h1>
 
+
 {% if events %}
   <div class="container">
     <h3>Events on this itinerary</h3>
@@ -9,7 +10,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Location</th>
+
           <th>Start date</th>
           <th>End date</th>
         </tr>
@@ -20,24 +21,25 @@
           <td>
             {{ event.name }}
           </td>
-          <td>{{ event.location }}</td>
-          <td>{{ event.start_date }}</td>
-          <td>{{ event.end_date }}</td>
+          <td>{{ event.start_time }}</td>
+          <td>{{ event.end_time }}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
   </div>
   {% else %}
-  
-  {% if is_current_user %}  
-  <h4>You have no events! Create a trip below.</h4>
+
+  {% if is_current_user %}
+  <h4>You have no events! Create a new event below.</h4>
   {% else %}
   <h4>No events found</h4>
   {% endif %}
   {% endif %}
 
-  <a href=# class="btn btn-success">Create New Event</a>
+  <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
+    Create New Event
+  </a>
 
 
 
