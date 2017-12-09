@@ -55,6 +55,7 @@ def cov():
         return 0
     return 1
     # this is a comment
+    # here is another comment
 
 
 @manager.command
