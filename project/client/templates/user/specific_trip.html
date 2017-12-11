@@ -1,8 +1,9 @@
 {% extends "_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
   <h1>Welcome to your trip: {{ trip.name }} </h1>
 
- 
+
   <div class="container">
     <h3>Trip Itineraries:</h3>
     <table class="table table-hover">
@@ -26,7 +27,27 @@
     </table>
   </div>
 
-  <!-- not working yet -->
+
+  <form class="form" role="form" method="post" action="">
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens="only") }}
+
+
+    <div class="col-lg-4 col-sm-4">
+
+      {{ wtf.form_field(form.user) }}
+
+      <button class="btn btn-success" type="submit">Invite User</button>
+      <br><br>
+
+    </div>
+
+  </form>
+
+
+  <!-- not working yet
   <h3> Add more friends</h3>
   <div class="container">
     <div class="row">
@@ -40,7 +61,7 @@
     </div>
   </div>
   <a class="btn btn-success">Send Invite(s)</a>
-
+-->
 
 
 {% endblock %}

@@ -45,3 +45,6 @@ class EventsForm(FlaskForm):
     start_time = DateTimeField('Start Time', [DataRequired()],description='HH:MM',format='%H:%M')
     end_date = DateField('End Date', [DataRequired()],description='MM/DD/YYYY',format='%m/%d/%Y')
     end_time = DateTimeField('End Time', [DataRequired()],description='HH:MM',format='%H:%M')
+
+class UserForm(FlaskForm):
+    user = StringField('User', [DataRequired(), Email()])

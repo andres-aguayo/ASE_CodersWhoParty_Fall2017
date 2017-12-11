@@ -11,7 +11,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
 from project.server.models import User, Trip, Itinerary, Event
-from project.server.user.forms import LoginForm, RegisterForm, TripForm, EventsForm
+from project.server.user.forms import LoginForm, RegisterForm, TripForm, EventsForm, UserForm
 
 
 ################
@@ -117,7 +117,21 @@ def specific_trip(trip_id):
     trip = Trip.query.filter_by(id=trip_id).first_or_404()
     users = User.query.filter(User.trips.contains(trip)).all()
     users.remove(current_user)
-    return render_template('user/specific_trip.html', trip=trip, users=users, current_user=current_user)
+    form = UserForm(request.form)
+    if form.validate_on_submit():
+        user1 = User.query.filter_by(email=form.user.data).first()
+        itinerary = Itinerary(
+            name = trip.name,
+            trip = trip,
+            user = user1
+        )
+        trip.users.append(user1)
+        db.session.add(trip)
+        db.session.add(itinerary)
+        db.session.commit()
+        users = User.query.filter(User.trips.contains(trip)).all()
+        users.remove(current_user)
+    return render_template('user/specific_trip.html', trip=trip, users=users, current_user=current_user, form=form)
 
 # IMPLEMENT ME
 def delete_trip():
