@@ -32,14 +32,14 @@
 
   {% if is_current_user %}
   <h4>You have no events! Create a new event below.</h4>
+  <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
+    Create New Event
+  </a>
+
   {% else %}
   <h4>No events found</h4>
   {% endif %}
   {% endif %}
-
-  <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
-    Create New Event
-  </a>
 
 
 

@@ -112,7 +112,6 @@ def trips():
 @user_blueprint.route('/trips/<trip_id>', methods=['GET', 'POST'])
 @login_required
 def specific_trip(trip_id):
-
     # looks for trip, if its not there, then 404s
     trip = Trip.query.filter_by(id=trip_id).first_or_404()
     users = User.query.filter(User.trips.contains(trip)).all()
