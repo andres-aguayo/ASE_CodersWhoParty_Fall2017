@@ -119,17 +119,20 @@ def specific_trip(trip_id):
     form = UserForm(request.form)
     if form.validate_on_submit():
         user1 = User.query.filter_by(email=form.user.data).first()
-        itinerary = Itinerary(
-            name = trip.name,
-            trip = trip,
-            user = user1
-        )
-        trip.users.append(user1)
-        db.session.add(trip)
-        db.session.add(itinerary)
-        db.session.commit()
-        users = User.query.filter(User.trips.contains(trip)).all()
-        users.remove(current_user)
+        if user1:
+            itinerary = Itinerary(
+                name = trip.name,
+                trip = trip,
+                user = user1
+            )
+            trip.users.append(user1)
+            db.session.add(trip)
+            db.session.add(itinerary)
+            db.session.commit()
+            users = User.query.filter(User.trips.contains(trip)).all()
+            users.remove(current_user)
+        else:
+            flash('There is no user with this email address.', 'danger')
     return render_template('user/specific_trip.html', trip=trip, users=users, current_user=current_user, form=form)
 
 # IMPLEMENT ME
