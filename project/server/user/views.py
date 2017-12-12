@@ -219,15 +219,6 @@ def import_event(trip_id, event_id):
     event = Event.query.filter_by(id=event_id).first()
     event.itineraries.append(itinerary)
     itinerary.events.append(event)
-    print(itinerary.user.email)
-#    copy = Event(
-#        name = event.name,
-#        description = event.description,
-#        start_time = event.start_time,
-#        end_time = event.end_time,
-#        itinerary = itinerary
-#    )
-#    db.session.add(copy)
     db.session.commit()
     return (''), 204
 
