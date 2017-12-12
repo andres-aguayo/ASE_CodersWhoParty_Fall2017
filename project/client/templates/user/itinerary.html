@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th>Name</th>
-
+          <th>Description</th>
           <th>Start date</th>
           <th>End date</th>
         </tr>
@@ -18,12 +18,17 @@
       <tbody>
       {% for event in events %}
         <tr>
-          <td>
-            {{ event.name }}
-          </td>
+          <td>{{ event.name }}</td>
+          <td>{{ event.description }}</td>
           <td>{{ event.start_time }}</td>
           <td>{{ event.end_time }}</td>
-          {% if not is_current_user %}
+          {% if is_current_user %}
+          <td>
+            <a href= {{url_for("user.edit_event", itinerary_id=itinerary.id, event_id=event.id)}} class="btn btn-success">
+              Edit
+            </a>
+          </td>
+          {% else %}
           <td>
             <a href= {{url_for("user.import_event", trip_id=trip.id, event_id=event.id)}} class="btn btn-success">
               Add To My Itinerary

@@ -220,11 +220,26 @@ def import_event(trip_id, event_id):
     event.itineraries.append(itinerary)
     itinerary.events.append(event)
     db.session.commit()
+    flash('Event added to itinerary!')
     return (''), 204
 
 # IMPLEMENT ME
-def edit_event():
-    pass
+@user_blueprint.route('/edit_event/<itinerary_id>/<event_id>', methods=['GET','POST'])
+@login_required
+def edit_event(itinerary_id, event_id):
+    event = Event.query.filter_by(id=event_id).first()
+    form = EventsForm(obj=event)
+    if form.validate_on_submit():
+      itinerary = Itinerary.query.filter_by(id=itinerary_id).first_or_404()
+      form.populate_obj(event)
+      start_date = form.start_date.data
+      end_date = form.end_date.data
+      event.start_time = form.start_time.data.replace(year=start_date.year, month=start_date.month, day=start_date.day)
+      event.end_time = form.end_time.data.replace(year=end_date.year, month=end_date.month, day=end_date.day)
+      db.session.commit()
+      flash('Event updated successfully.')
+      return redirect(url_for("user.itinerary", trip_id=itinerary.trip.id, user_id=itinerary.user.id))
+    return render_template('user/new_event.html', form=form)
 
 # IMPLEMENT ME
 '''
