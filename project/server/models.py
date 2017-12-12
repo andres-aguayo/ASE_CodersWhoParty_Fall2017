@@ -29,6 +29,7 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
     itineraries = db.relationship("Itinerary", back_populates="user")
+    last_login = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -37,6 +38,10 @@ class User(db.Model):
         ).decode('utf-8')
         self.registered_on = datetime.datetime.now()
         self.admin = admin
+        self.last_login = datetime.datetime.now()
+
+    def update_login(self):
+        self.last_login = datetime.datetime.now()
 
     def is_authenticated(self):
         return True
@@ -87,11 +92,16 @@ class Itinerary(db.Model):
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
     user = db.relationship("User", back_populates="itineraries")
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    last_itinerary_edited = db.Column(db.DateTime)
 
     def __init__(self, name, trip, user):
         self.name = name
         self.trip = trip
         self.user = user
+        self.last_login = datetime.datetime.now()
+
+    def update_edited(self):
+        self.last_itinerary_edited = datetime.datetime.now()
 
 # event-itinerary relationship needs to be changed to many to many
 # similar to how many users can have many trips and vice versa
@@ -106,9 +116,15 @@ class Event(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text)
     itineraries = db.relationship("Itinerary", secondary = itinerary_events, back_populates="events")
+    last_event_edited = db.Column(db.DateTime, nullable=False)
+
     def __init__(self, name, description, start_time, end_time, itinerary):
         self.name = name
         self.description = description
         self.start_time = start_time
         self.end_time = end_time
         self.itineraries.append(itinerary)
+        self.last_itinerary_edited = datetime.datetime.now()
+
+    def update_edited(self):
+        self.last_event_edited = datetime.datetime.now()
