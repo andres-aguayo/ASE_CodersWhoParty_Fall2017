@@ -212,6 +212,26 @@ def new_event(itinerary):
     return render_template('user/new_event.html', form=form)
 
 # IMPLEMENT ME
+@user_blueprint.route('/import_event/<trip_id>/<event_id>')
+@login_required
+def import_event(trip_id, event_id):
+    itinerary = Itinerary.query.filter_by(user=current_user,trip_id=trip_id).first_or_404()
+    event = Event.query.filter_by(id=event_id).first()
+    event.itineraries.append(itinerary)
+    itinerary.events.append(event)
+    print(itinerary.user.email)
+#    copy = Event(
+#        name = event.name,
+#        description = event.description,
+#        start_time = event.start_time,
+#        end_time = event.end_time,
+#        itinerary = itinerary
+#    )
+#    db.session.add(copy)
+    db.session.commit()
+    return (''), 204
+
+# IMPLEMENT ME
 def edit_event():
     pass
 
