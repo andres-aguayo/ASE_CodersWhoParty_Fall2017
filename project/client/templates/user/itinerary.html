@@ -28,6 +28,13 @@
       </tbody>
     </table>
   </div>
+
+  {% if is_current_user %}
+  <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
+    Create New Event
+  </a>
+  {% endif %}
+
   {% else %}
 
   {% if is_current_user %}
