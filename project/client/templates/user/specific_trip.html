@@ -15,11 +15,12 @@
             </a>
           </td>
         </tr>
-        {% for user in users %}
+        {% for itinerary in itineraries %}
         <tr>
           <td>
-            <a href= {{url_for("user.itinerary", trip_id=trip.id, user_id=user.id)}}>
-            {{ user.email }}'s Itinerary
+            {{ itinerary_updated[itinerary] | safe }}
+            <a href= {{url_for("user.itinerary", trip_id=itinerary.trip.id, user_id=itinerary.user.id)}}>
+            {{ itinerary.user.email }}'s Itinerary
           </td>
         </tr>
       {% endfor %}

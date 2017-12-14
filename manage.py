@@ -73,14 +73,15 @@ def drop_db():
 @manager.command
 def create_admin():
     """Creates the admin user."""
-    db.session.add(User(email='ad@min.com', password='admin', admin=True))
+    #db.session.add(User(email='ad@min.com', password='admin', admin=True))
     db.session.commit()
 
 
 @manager.command
 def create_data():
-    """Creates sample data."""
-    pass
+    for i in range(10):
+        db.session.add(User(email='user'+str(i)+'@mail.com', password='test'))
+    db.session.commit()
 
 
 if __name__ == '__main__':
