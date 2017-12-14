@@ -3,9 +3,6 @@
 {% block content %}
 <h1>Welcome to {{ user.email }}'s {{ trip.name }} itinerary!</h1>
 
-{% if app_user == current_user %}
-<h5>You are an approved editor on this itinerary.</h5>
-{% endif %}
 
 {% if events %}
   <div class="container">
@@ -44,63 +41,32 @@
       </tbody>
     </table>
   </div>
-
+{% else %}
   {% if is_current_user %}
-    {% if app_user != None %}
-      <h5>{{app_user.email}} is an approved editor on this itinerary.</h5>
-    {% elif req_user != None %}
-      <div class="container">
-        <h5>{{req_user.email}} is requesting to edit this itinerary.</h5>
-        <a href= {{url_for("user.approve", itinerary_id = itinerary.id)}} class="btn btn-success">
-          Approve {{req_user.email}} as editor
-        </a>
-      </div>
-    {% endif %}
+    <h4>You have no events! Create a new event below.</h4>
+  {% else %}
+    <h4>No events found</h4>
   {% endif %}
+{% endif %}
 
-  {% if is_current_user or current_user == app_user%}
+
+{% if is_current_user or current_user == app_user%}
   <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
     Create New Event
   </a>
-
-  {% else %}
-
+{% elif current_user == req_user %}
+ <h5> Your request to edit is pending </h5>
+{% else %}
   <form class="form" role="form" method="post" action="">
-
     {{ form.csrf_token }}
     {{ form.hidden_tag() }}
     {{ wtf.form_errors(form, hiddens="only") }}
-
     <button class="btn btn-success" type="submit">Request to Edit</button>
-    <br><br>
-
   </form>
-  {% endif %}
+{% endif %}
 
-  {% else %}
 
-  {% if is_current_user or current_user == app_user%}
-  <h4>You have no events! Create a new event below.</h4>
-  <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
-    Create New Event
-  </a>
-
-  {% else %}
-  <h4>No events found</h4>
-
-  <form class="form" role="form" method="post" action="">
-
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens="only") }}
-
-    <button class="btn btn-success" type="submit">Request to Edit</button>
-    <br><br>
-
-  </form>
-  {% endif %}
-
-  {% if is_current_user %}
+{% if is_current_user %}
   {% if app_user != None %}
     <h5>{{app_user.email}} is an approved editor on this itinerary.</h5>
   {% elif req_user != None %}
@@ -111,13 +77,13 @@
       </a>
     </div>
   {% endif %}
-  {% endif %}
+{% elif app_user == current_user %}
+  <h5>You are an approved editor on this itinerary.</h5>
+{% endif %}
 
-  {% endif %}
 
-
-  <a href= {{url_for("user.specific_trip", trip_id=trip.id)}} class="btn btn-success">
-    Back To Trip
-  </a>
+<a href= {{url_for("user.specific_trip", trip_id=trip.id)}} class="btn btn-success">
+  Back To Trip
+</a>
 
 {% endblock %}
