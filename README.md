@@ -59,11 +59,7 @@ $ export APP_SETTINGS="project.server.config.ProductionConfig"
 ### Create DB
 
 ```sh
-$ python3 manage.py create_db
-$ python3 manage.py db init
-$ python3 manage.py db migrate
-$ python3 manage.py create_admin
-$ python3 manage.py create_data
+$ ./create_db.sh
 ```
 
 ### Run the Application
