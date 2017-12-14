@@ -28,7 +28,10 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
-    itineraries = db.relationship("Itinerary", back_populates="user")
+    #itinerary_ids = db.Column(db.Integer, db.ForeignKey("itineraries.id"))
+    #itineraries = db.relationship("Itinerary", foreign_keys=[itinerary_ids], back_populates="user")
+    #approved_itineraries = db.relationship("Itinerary", back_populates="approved_users")
+    #requested_itineraries = db.relationship("Itinerary", back_populates="requesting_users")
     last_login = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, email, password, admin=False):
@@ -90,8 +93,12 @@ class Itinerary(db.Model):
     events = db.relationship("Event", secondary = itinerary_events, back_populates="itineraries")
     trip = db.relationship("Trip", back_populates="itineraries")
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
-    user = db.relationship("User", back_populates="itineraries")
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user = db.relationship("User", foreign_keys=[user_id])
+    app_user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    approved_user = db.relationship("User", foreign_keys=[app_user_id])
+    req_user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    requesting_user = db.relationship("User", foreign_keys=[req_user_id])
     last_edited = db.Column(db.DateTime)
 
     def __init__(self, name, trip, user):
@@ -99,6 +106,8 @@ class Itinerary(db.Model):
         self.trip = trip
         self.user = user
         self.last_login = datetime.datetime.now()
+        self.approved_user = None
+        self.requesting_user = None
 
     def update_edited(self):
         self.last_edited = datetime.datetime.now()

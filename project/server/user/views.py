@@ -11,7 +11,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from project.server import bcrypt, db
 from project.server.models import User, Trip, Itinerary, Event
-from project.server.user.forms import LoginForm, RegisterForm, TripForm, EventsForm, UserForm
+from project.server.user.forms import LoginForm, RegisterForm, TripForm, EventsForm, UserForm, EditForm
 
 
 ################
@@ -191,7 +191,7 @@ how should editing an itinerary work?
 is that really just editing the events of an itinerary?
 '''
 
-@user_blueprint.route('/trips/<trip_id>/itinerary/<user_id>')
+@user_blueprint.route('/trips/<trip_id>/itinerary/<user_id>', methods=['GET', 'POST'])
 @login_required
 def itinerary(trip_id, user_id):
     # query database for relevant info
@@ -200,13 +200,28 @@ def itinerary(trip_id, user_id):
     itinerary = Itinerary.query.filter_by(trip=trip, user=user).first_or_404()
     seen_itineraries.append(int(itinerary.id))
     events = itinerary.events
+    req_user = itinerary.requesting_user
+    app_user = itinerary.approved_user
 
+    print(req_user)
+    form = EditForm(request.form)
+    if form.validate_on_submit():
+        if itinerary.requesting_user == None and itinerary.approved_user == None:
+            itinerary.requesting_user = current_user
+            print(itinerary.name)
+            print(itinerary.user)
+            print(itinerary.requesting_user)
+            db.session.add(itinerary)
+            db.session.commit()
+            flash('Edit Privileges Requested')
+        else:
+            flash('Itinerary already has maximum number of editors')
     # check if user is current user for dynamic web page
     is_current_user = False
     if user == current_user:
         is_current_user = True
 
-    return render_template('user/itinerary.html', trip=trip, user=user, events=events, is_current_user=is_current_user, itinerary = itinerary)
+    return render_template('user/itinerary.html', trip=trip, user=user, events=events, req_user = req_user, app_user = app_user, is_current_user=is_current_user, itinerary = itinerary, form=form)
 
 def check_update(user, event):
     if event.last_edited > user.last_login:
@@ -258,6 +273,20 @@ def import_event(trip_id, event_id):
     flash('Event added to itinerary!')
     return redirect(url_for("user.itinerary" , trip_id=itinerary.trip.id, user_id=itinerary.user.id))
 
+'''
+@user_blueprint.route('/request_edit/<itinerary_id>')
+@login_required
+def request_edit(itinerary_id):
+    itinerary = Itinerary.query.filter_by(id=itinerary_id).first()
+    if (itinerary.requesting_users != None or itinerary.approved_users != None):
+        flash('Itinerary already has maximum number of editors')
+    else:
+        itinerary.requesting_users = current_user
+        db.session.commit()
+        flash('Edit Privileges Requested')
+    return redirect(url_for("user.itinerary" , trip_id=itinerary.trip.id, user_id=itinerary.user.id))
+'''
+
 # IMPLEMENT ME
 @user_blueprint.route('/edit_event/<itinerary_id>/<event_id>', methods=['GET','POST'])
 @login_required
@@ -267,8 +296,8 @@ def edit_event(itinerary_id, event_id):
     if form.validate_on_submit():
         itinerary = Itinerary.query.filter_by(id=itinerary_id).first_or_404()
         form.populate_obj(event)
-        start_date = form.start_date.data
-        end_date = form.end_date.data
+        event.start_date = form.start_date.data
+        event.end_date = form.end_date.data
         event.start_time = form.start_time.data.replace(year=start_date.year, month=start_date.month, day=start_date.day)
         event.end_time = form.end_time.data.replace(year=end_date.year, month=end_date.month, day=end_date.day)
         event.update_edited()
@@ -276,6 +305,17 @@ def edit_event(itinerary_id, event_id):
         flash('Event updated successfully.')
         return redirect(url_for("user.itinerary", trip_id=itinerary.trip.id, user_id=itinerary.user.id))
     return render_template('user/new_event.html', form=form)
+
+# IMPLEMENT ME
+@user_blueprint.route('/approve/<itinerary_id>')
+@login_required
+def approve(itinerary_id):
+    itinerary = Itinerary.query.filter_by(id=itinerary_id).first()
+    itinerary.approved_user = itinerary.requesting_user
+    itinerary.requesting_user = None
+    db.session.commit()
+    flash('You have approved user as editor')
+    return redirect(url_for("user.itinerary" , trip_id=itinerary.trip.id, user_id=itinerary.user.id))
 
 # IMPLEMENT ME
 '''

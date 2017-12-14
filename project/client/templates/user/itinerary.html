@@ -1,7 +1,11 @@
 {% extends '_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <h1>Welcome to {{ user.email }}'s {{ trip.name }} itinerary!</h1>
 
+{% if app_user == current_user %}
+<h5>You are an approved editor on this itinerary.</h5>
+{% endif %}
 
 {% if events %}
   <div class="container">
@@ -22,7 +26,7 @@
           <td>{{ event.description }}</td>
           <td>{{ event.start_time }}</td>
           <td>{{ event.end_time }}</td>
-          {% if is_current_user %}
+          {% if is_current_user or app_user %}
           <td>
             <a href= {{url_for("user.edit_event", itinerary_id=itinerary.id, event_id=event.id)}} class="btn btn-success">
               Edit
@@ -42,14 +46,40 @@
   </div>
 
   {% if is_current_user %}
+    {% if app_user != None %}
+      <h5>{{app_user.email}} is an approved editor on this itinerary.</h5>
+    {% elif req_user != None %}
+      <div class="container">
+        <h5>{{req_user.email}} is requesting to edit this itinerary.</h5>
+        <a href= {{url_for("user.approve", itinerary_id = itinerary.id)}} class="btn btn-success">
+          Approve {{req_user.email}} as editor
+        </a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if is_current_user or current_user == app_user%}
   <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
     Create New Event
   </a>
+
+  {% else %}
+
+  <form class="form" role="form" method="post" action="">
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens="only") }}
+
+    <button class="btn btn-success" type="submit">Request to Edit</button>
+    <br><br>
+
+  </form>
   {% endif %}
 
   {% else %}
 
-  {% if is_current_user %}
+  {% if is_current_user or current_user == app_user%}
   <h4>You have no events! Create a new event below.</h4>
   <a href= {{url_for("user.new_event", itinerary=itinerary.id)}} class="btn btn-success">
     Create New Event
@@ -57,14 +87,37 @@
 
   {% else %}
   <h4>No events found</h4>
+
+  <form class="form" role="form" method="post" action="">
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens="only") }}
+
+    <button class="btn btn-success" type="submit">Request to Edit</button>
+    <br><br>
+
+  </form>
+  {% endif %}
+
+  {% if is_current_user %}
+  {% if app_user != None %}
+    <h5>{{app_user.email}} is an approved editor on this itinerary.</h5>
+  {% elif req_user != None %}
+    <div class="container">
+      <h5>{{req_user.email}} is requesting to edit this itinerary.</h5>
+      <a href= {{url_for("user.approve", itinerary_id = itinerary.id)}} class="btn btn-success">
+        Approve {{req_user.email}} as editor
+      </a>
+    </div>
   {% endif %}
   {% endif %}
+
+  {% endif %}
+
 
   <a href= {{url_for("user.specific_trip", trip_id=trip.id)}} class="btn btn-success">
     Back To Trip
   </a>
-
-
-
 
 {% endblock %}

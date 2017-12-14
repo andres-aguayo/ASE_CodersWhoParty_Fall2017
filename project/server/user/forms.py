@@ -48,3 +48,6 @@ class EventsForm(FlaskForm):
 
 class UserForm(FlaskForm):
     user = StringField('User', [DataRequired(), Email()])
+
+class EditForm(FlaskForm):
+    message = StringField('Message')
