@@ -28,10 +28,6 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     trips = db.relationship("Trip", secondary= users_trips, back_populates = "users")
-    #itinerary_ids = db.Column(db.Integer, db.ForeignKey("itineraries.id"))
-    #itineraries = db.relationship("Itinerary", foreign_keys=[itinerary_ids], back_populates="user")
-    #approved_itineraries = db.relationship("Itinerary", back_populates="approved_users")
-    #requested_itineraries = db.relationship("Itinerary", back_populates="requesting_users")
     last_login = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, email, password, admin=False):
